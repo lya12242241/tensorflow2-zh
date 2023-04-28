@@ -12,13 +12,13 @@ def unet_train():
     height = 512
     width = 512
     X_train, y_train = [], []
-    auth = oss2.Auth('<LTAI5tQr5tvcovwvWWh2958Z>', '<82ptOKRt62FNm5aNdiOq0I5Nmn0ggA>')
+    auth = oss2.Auth('LTAI5tQr5tvcovwvWWh2958Z', '82ptOKRt62FNm5aNdiOq0I5Nmn0ggA')
     bucket = oss2.Bucket(auth, 'http://oss-cn-beijing.aliyuncs.com', 'lya1')
     for b in islice(oss2.ObjectIterator(bucket, prefix='train_label/'), 10000):
         print(b.key)
         img = cv2.imread(b.key)
         X_train.append(img)
-    auth = oss2.Auth('<LTAI5tQr5tvcovwvWWh2958Z>', '<82ptOKRt62FNm5aNdiOq0I5Nmn0ggA>')
+    auth = oss2.Auth('LTAI5tQr5tvcovwvWWh2958Z', '82ptOKRt62FNm5aNdiOq0I5Nmn0ggA')
     bucket = oss2.Bucket(auth, 'http://oss-cn-beijing.aliyuncs.com', 'lya1')
     for b in islice(oss2.ObjectIterator(bucket, prefix='train_image/'), 10000):
         print(b.key)
