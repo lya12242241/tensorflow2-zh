@@ -10,7 +10,7 @@ from tensorflow.keras import layers, losses, models
 def unet_train():
     height = 512
     width = 512
-    path = '/root/code/unetdata/'
+    path = '/mnt/data/unetdata/'
     input_name = os.listdir(path + 'train_image')
     n = len(input_name)
     print(n)
