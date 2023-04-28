@@ -5,6 +5,7 @@ import os
 import cv2
 from tensorflow.keras import layers, losses, models
 import oss2
+from itertools import islice  # 导入islice函数
 
 
 def unet_train():
