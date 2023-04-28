@@ -4,23 +4,26 @@ import numpy as np
 import os
 import cv2
 from tensorflow.keras import layers, losses, models
-
+import oss2
 
 
 def unet_train():
     height = 512
     width = 512
-    path = '/mnt/data/unetdata/'
-    input_name = os.listdir(path + 'train_image')
-    n = len(input_name)
-    print(n)
     X_train, y_train = [], []
-    for i in range(n):
-        print("正在读取第%d张图片" % i)
-        img = cv2.imread(path + 'train_image/%d.png' % i)
-        label = cv2.imread(path + 'train_label/%d.png' % i)
+    auth = oss2.Auth('<LTAI5tCjs7AiHqwXidqMRzNr>', '<pLOufpoHtLg6zYuxr0bPOHD6SvL1t3>')
+    bucket = oss2.Bucket(auth, 'http://oss-cn-beijing.aliyuncs.com', 'lya1')
+    for b in islice(oss2.ObjectIterator(bucket, prefix='train_label/'), 10000):
+        print(b.key)
+        img = cv2.imread(b.key)
         X_train.append(img)
+    auth = oss2.Auth('<LTAI5tCjs7AiHqwXidqMRzNr>', '<pLOufpoHtLg6zYuxr0bPOHD6SvL1t3>')
+    bucket = oss2.Bucket(auth, 'http://oss-cn-beijing.aliyuncs.com', 'lya1')
+    for b in islice(oss2.ObjectIterator(bucket, prefix='train_image/'), 10000):
+        print(b.key)
+        label = cv2.imread(b.key)
         y_train.append(label)
+        
     X_train = np.array(X_train)
     y_train = np.array(y_train)
 
